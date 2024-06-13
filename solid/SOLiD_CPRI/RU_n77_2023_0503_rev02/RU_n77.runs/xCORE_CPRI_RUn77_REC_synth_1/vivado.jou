@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Vivado v2022.2.1 (64-bit)
+# SW Build 3719031 on Thu Dec  8 18:35:04 MST 2022
+# IP Build 3718410 on Thu Dec  8 22:11:41 MST 2022
+# Start of session at: Mon Feb  6 23:12:48 2023
+# Process ID: 228120
+# Current directory: D:/K2_Project/UQ_DAS/RU_n77/RU_n77.runs/xCORE_CPRI_RUn77_REC_synth_1
+# Command line: vivado.exe -log xCORE_CPRI_RUn77_REC.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source xCORE_CPRI_RUn77_REC.tcl
+# Log file: D:/K2_Project/UQ_DAS/RU_n77/RU_n77.runs/xCORE_CPRI_RUn77_REC_synth_1/xCORE_CPRI_RUn77_REC.vds
+# Journal file: D:/K2_Project/UQ_DAS/RU_n77/RU_n77.runs/xCORE_CPRI_RUn77_REC_synth_1\vivado.jou
+# Running On: SUPERK2-PC, OS: Windows, CPU Frequency: 3096 MHz, CPU Physical cores: 14, Host memory: 68375 MB
+#-----------------------------------------------------------
+source xCORE_CPRI_RUn77_REC.tcl -notrace

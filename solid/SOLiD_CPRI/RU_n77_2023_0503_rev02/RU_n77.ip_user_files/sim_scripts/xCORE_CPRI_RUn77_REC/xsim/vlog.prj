@@ -1,0 +1,13 @@
+verilog xil_defaultlib --include "../../../ipstatic/hdl" --include "../../../ipstatic/hdl_cpri_hard_fec" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/ip_0/sim/gtwizard_ultrascale_v1_7_gtye4_channel.v" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/ip_0/sim/xCORE_CPRI_RUn77_REC_gt_gtye4_channel_wrapper.v" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/ip_0/sim/xCORE_CPRI_RUn77_REC_gt_gtwizard_gtye4.v" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/ip_0/sim/xCORE_CPRI_RUn77_REC_gt_gtwizard_top.v" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/ip_0/sim/xCORE_CPRI_RUn77_REC_gt.v" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/ip_1/sim/xCORE_CPRI_RUn77_REC_fc32_rs_fec.v" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/xCORE_CPRI_RUn77_REC/example_design/gtwizard_ultrascale_v1_7_gtye4_common.v" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/xCORE_CPRI_RUn77_REC/example_design/xCORE_CPRI_RUn77_REC_gt_common.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+nosort

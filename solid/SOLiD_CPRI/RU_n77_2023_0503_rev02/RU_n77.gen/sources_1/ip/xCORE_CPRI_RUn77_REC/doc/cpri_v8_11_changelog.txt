@@ -1,0 +1,462 @@
+2022.2.1:
+ * Version 8.11 (Rev. 14)
+ * Feature Enhancement: Enabled pre-production Versal GTYP support.
+ * Revision change in one or more subcores
+
+2022.2:
+ * Version 8.11 (Rev. 13)
+ * Bug Fix: Fixed max CPRI line rate calculation on Artix Ultrascale Plus parts, some speed grades had invalid line rates enabled.
+ * Feature Enhancement: Enabled the external CPRI Hard FEC interface on Versal devices.
+ * Other: Limited Kintex and Virtex Ultrascale -1 speedgrade parts using GTHE3 transceivers to 10.137Gb/s line rate. Timing can't be guaranteed for some configs at 12.165Gb/s.
+ * Revision change in one or more subcores
+
+2022.1.2:
+ * Version 8.11 (Rev. 12)
+ * No changes
+
+2022.1.1:
+ * Version 8.11 (Rev. 12)
+ * No changes
+
+2022.1:
+ * Version 8.11 (Rev. 12)
+ * Bug Fix: Fixed a bug where if regenerating the core from the xci file, the original and regenerated xml files could have differences.
+ * Bug Fix: Fixed a bug in xa7k160 example designs which were failing implementation because of a missing bufg on txoutclk.
+ * Bug Fix: Fixed a bug in 0.614Gb/s line rate where ocassional ethernet errors could be observed.
+ * Feature Enhancement: EGW_IS_PARENT_IP attribute added for Versal hard block planner visibility.
+ * Feature Enhancement: EXTENDED_CDC_FIFO now extends the FIFO fill level and FIFO depth for Slaves as well as Master cores.
+ * Revision change in one or more subcores
+
+2021.2.2:
+ * Version 8.11 (Rev. 11)
+ * Revision change in one or more subcores
+
+2021.2.1:
+ * Version 8.11 (Rev. 10)
+ * Revision change in one or more subcores
+
+2021.2:
+ * Version 8.11 (Rev. 9)
+ * Bug Fix: Fixed a bug where the default watchdog value was non-zero for Ultrascale and Versal architectures. This has been corrected to zero which disables the watchdog.
+ * Bug Fix: Fixed a bug in Ultrascale and Ultrascale+ devices when switching into 9.8Gb/s line rate, the state machine did not wait for CPLL reset to complete before returning to idle state.
+ * Revision change in one or more subcores
+
+2021.1.1:
+ * Version 8.11 (Rev. 8)
+ * Revision change in one or more subcores
+
+2021.1:
+ * Version 8.11 (Rev. 7)
+ * Bug Fix: Fixed a bug with nodebfn_tx_strobe alignment if the strobe was in advance of iq_tx_enable by 2 clock cycles.
+ * Bug Fix: Fixed a bug in 0.614Gb/s line rate 64bit datapath which caused an intermittent failure to reach the operate state.
+ * Bug Fix: Fixed a bug in the example design when Hard FEC option selected with shared logic in the example design, error only occurs in devices with both GTH and GTY transceivers. No change to core.
+ * Bug Fix: Fixed a bug in Versal example design when RT Vendor Support option enabled, example design data checker module was reporting RT Vendor data errors. No change to core.
+ * Feature Enhancement: For Versal designs added extended CDC FIFO Depth option to GUI.
+ * Other: Updated to use v1.1 of the Versal gt_quad_base.
+ * Revision change in one or more subcores
+
+2020.3:
+ * Version 8.11 (Rev. 6)
+ * Revision change in one or more subcores
+
+2020.2.2:
+ * Version 8.11 (Rev. 5)
+ * No changes
+
+2020.2.1:
+ * Version 8.11 (Rev. 5)
+ * No changes
+
+2020.2:
+ * Version 8.11 (Rev. 5)
+ * Port Change: Added ch_txmstdatapathreset & ch_rxmstdatapathreset output ports to Versal GT interfaces to support gt_reset_ip_v1.1.
+ * Bug Fix: Fixed a bug in HFNSYNC module where there was a remote chance of the core failing to align to the received hyperframe correctly.
+ * Bug Fix: Fixed a bug in Versal designs where Block Automation would not run on more than one CPRI core.
+ * Bug Fix: In Versal designs tx/rxmstresetdone and tx/rxpmaresetdone inputs from the GT Quad are now synchronized onto the aux_clk/s_axi_aclk domain.
+ * Feature Enhancement: Customized Connections option added to Block Automation in Versal designs.
+ * Feature Enhancement: Removed encommaalign logic from Versal block designs, not required from 2020.2.
+ * Feature Enhancement: Updated to support version 1.1 of the gt_reset_ip sub-ip core.
+ * Other: Added Versal GT and Refclk location constraints to the CPRI example design, this removes MGTIO DRC errors.
+ * Revision change in one or more subcores
+
+2020.1.1:
+ * Version 8.11 (Rev. 4)
+ * Revision change in one or more subcores
+
+2020.1:
+ * Version 8.11 (Rev. 3)
+ * Port Change: Added agn_line_speed input port for Agnostic mode fast auto-negotiation function.
+ * Port Change: Added missing output port aux_clk_out on Versal designs when the AXI management option was selected.
+ * Bug Fix: Fixed a bug in Versal IPI design where FREQ_Hz parameters on clock output ports were missing.
+ * Bug Fix: Fixed a bug in Versal where Slave FEC cores did not drive bits 14:11 of the speed_select status port.
+ * Bug Fix: Fixed a bug in Versal simulations where encommaalign was occasionally not set correctly.
+ * Bug Fix: Fixed a bug where 12.1G line rate was not available in 7-series Zynq devices with -3 speedgrade.
+ * Bug Fix: Fixed a bug in some Win10 versions of Vivado 2019.2 where create CPRI IP caused errors with some devices.
+ * Feature Enhancement: New Agnostic mode features including, optional port to switch line rate, sub-addresses 0 & 2 are unmodified, link negotiation disabled and 8b10b scrambling removed.
+ * Other: Example design now uses the actual aux_clk and freerun clock frequencies entered by the user in the GUI.
+ * Other: Improved example design clock domain synchronization.
+ * Other: Updated to use version 3.1 of the CMAC_USPLUS sub-ip core (Hard FEC).
+ * Revision change in one or more subcores
+
+2019.2.2:
+ * Version 8.11 (Rev. 2)
+ * Revision change in one or more subcores
+
+2019.2.1:
+ * Version 8.11 (Rev. 1)
+ * Revision change in one or more subcores
+
+2019.2:
+ * Version 8.11
+ * Port Change: Added Versal GT interface ports.
+ * Bug Fix: Fixed Critical Warning in IPI GMII interface associated with multiple clocks.
+ * Feature Enhancement: Added Versal support for all 64b66b line rates including FEC and 8b10b line rates between 9.8G & 2.4G.
+ * Feature Enhancement: Added QPLL display field to the CPRI GUI for 24.3G line rates. refclk0 must be used with QPLL0 and refclk1 with QPLL1.
+ * Feature Enhancement: Delayed CPLL power down de-assertion until cpll_reset is deasserted, stops CPLL calibartion starting before reset is complete.
+ * Other: Implemented new IP waiver mechanism.
+ * Revision change in one or more subcores
+
+2019.1.3:
+ * Version 8.10 (Rev. 3)
+ * Revision change in one or more subcores
+
+2019.1.2:
+ * Version 8.10 (Rev. 2)
+ * Revision change in one or more subcores
+
+2019.1.1:
+ * Version 8.10 (Rev. 1)
+ * Revision change in one or more subcores
+
+2019.1:
+ * Version 8.10
+ * Port Change: Added optional Structure Agnostic Line Coding Aware interface ports.
+ * Feature Enhancement: Added optional Structure Agnostic Line Coding Aware Mode.
+ * Feature Enhancement: Added extended CDC FIFO depth to support long transmission lines.
+ * Revision change in one or more subcores
+
+2018.3.1:
+ * Version 8.9 (Rev. 3)
+ * Revision change in one or more subcores
+
+2018.3:
+ * Version 8.9 (Rev. 2)
+ * Port Change: Added Hard FEC FIFO latency measurement ports.
+ * Bug Fix: Fixed synchronization control word bit corruptions in FEC cores.
+ * Bug Fix: Fixed bug introduced in 2018.1 where slave cores caused the link to resync every 10ms.
+ * Bug Fix: Fixed incorrect line rate and ref clock comments in common wrapper DRP state machine.
+ * Bug Fix: Removed 12.1Gbps support on -1LV speed grade zynquplus parts, RXUSRCLK & TXUSRCLK max frequency too low.
+ * Feature Enhancement: Changed Hard FEC rsfec_clk frequency to improve latency measurement.
+ * Feature Enhancement: Modified Hard FEC wrapper to improve latency measurement.
+ * Feature Enhancement: Removed CMAC/GT location limitations in Hard FEC cores.
+ * Other: Updated to use version 2.5 of the Ultrascale Plus CMAC (Hard FEC).
+ * Revision change in one or more subcores
+
+2018.2:
+ * Version 8.9 (Rev. 1)
+ * Bug Fix: Fixed example design HDLC stimulus block reset issue.
+ * Bug Fix: Fixed example design Hard FEC Wrapper data checker bug.
+ * Other: Added support for new virtexusplus58g family.
+ * Revision change in one or more subcores
+
+2018.1:
+ * Version 8.9
+ * Port Change: Removed MMCM from Hard FEC implementations, now providing rsfec_clk input port (307.2MHz).
+ * Port Change: Added output port hyperframe_number for metrics collection.
+ * Bug Fix: Corrected the QPLL clock frequency on 10.1G FEC enabled line rate at 245.76MHz reference clock.
+ * Bug Fix: Fixed bug where xcku15p-ffva1760 and xcku15p-ffve1760 devices were not enabled for GTYE4.
+ * Feature Enhancement: Improved the reset input synchronization scheme.
+ * Feature Enhancement: Added the ability to inject bit errors in FEC enabled cores for debug.
+ * Feature Enhancement: Added Hard FEC support for 8.1G, 10.1G and 12.1G line rates.
+ * Feature Enhancement: Added Hard FEC support for MPSOC and RFSOC parts.
+ * Feature Enhancement: Added synchronizers to stat_cw output ports in Hard FEC Wrapper implementations.
+ * Feature Enhancement: Added 8b10b line rate support to the RXRECCLKOUT recovered clock port.
+ * Feature Enhancement: For Hard FEC implementations improved the CMAC location, transceiver location and ref clock location interaction in the CPRI GUI.
+ * Feature Enhancement: For Ultrascale parts the watchdog timer now defaults to disabled.
+ * Other: Added support for Xcelium simulator.
+ * Revision change in one or more subcores
+
+2017.4:
+ * Version 8.8 (Rev. 1)
+ * Bug Fix: Fixed methodology TIMING-11 violations by removing redundant set_max_delay constraints.
+ * Bug Fix: Fixed bug in 7-series logic which resulted in Vivado warnings.
+ * Bug Fix: Hard FEC now corrupts sync headers in the case of an uncorrected codeword iaw IEEE 802.3bj-2014 91.5.3.3.
+ * Bug Fix: Fixed bug in Hard FEC implementations where corrected_cw_inc was asserted on every codeword.
+ * Feature Enhancement: Disabled Slave option in GUI when Hard FEC is selected, slave is not currently supported with Hard FEC.
+ * Feature Enhancement: Optimized synchronization logic, removing Vivado methodology warnings.
+ * Feature Enhancement: Refactored Tx control word logic to reduce low fan out control sets.
+ * Feature Enhancement: Updated get_pins constraints to improve run times.
+ * Feature Enhancement: Added false_path constraints to unused picoblaze ports to remove unconstrained internal endpoints warnings.
+ * Other: Added support for azynquplus devices.
+ * Revision change in one or more subcores
+
+2017.3:
+ * Version 8.8
+ * Port Change: Added optional output port mmcm_locked_out for 7-series parts.
+ * Port Change: Enabled optional output port txusrclk_out for 8b10b line rates on 24.3G capable cores.
+ * Port Change: Removed deprecated ports gt_reset_req and gt_reset_req_out for 7 series devices.
+ * Feature Enhancement: Added support for Hard FEC on receive data path for Ultrascale+ parts with 100G RS-FEC support.
+ * Feature Enhancement: Added Freerun clock rate field to the GUI. Used by the Ultrascale GT wizard reset block.
+ * Other: Replaced fifo_generator subcore with XPM_FIFO.
+ * Revision change in one or more subcores
+
+2017.2:
+ * Version 8.7 (Rev. 3)
+ * Bug Fix: Fixed bug where remote alarms were not being set correctly.
+ * Bug Fix: Fixed bug where FEC line rates were not using 64b/66b scrambling as per the CPRI specification.
+ * Bug Fix: Fixed incorrect line rate and clock frequencies on Ultrascale GTHE3 cores using 12.1G line rate support and 307.2/245.76MHZ ref clock.
+ * Other: Updated to use version 1.7 of the Ultrascale GT Wizard.
+ * Revision change in one or more subcores
+
+2017.1:
+ * Version 8.7 (Rev. 2)
+ * Port Change: Routed stat_rx_delay_value from the FEC to the core output to support more accurate calculation of latency through the FEC.
+ * Bug Fix: Fixed issue in 64-bit cores where the received ethernet preamble was corrupted.
+ * Bug Fix: Synchronized the TX start and end codes to the TX header.
+ * Bug Fix: Corrected the transceiver timing constraints for Ultrascale 9.8Gbps capable cores that use the CPLL at 9.8Gbps.
+ * Bug Fix: Fixed the 8b10b descrambler for 24.33024Gbps capable cores.
+ * Bug Fix: Fixed issue where the GT reset block could go into a hang up state if PLL lock is lost after a complete reset sequence.
+ * Bug Fix: Instantiated the FEC as a dynamic hierarchical sub-core to fix phantom FEC license Critical Warnings.
+ * Other: Added support for Zynq UltraScale+ RFSoC devices.
+ * Other: Transceivers on Ultrascale and Ultrascale+ -2LV speedgrade parts changed to use QPLL at 9.8304Gbps.
+ * Other: Added support for 24.33024Gbps line rate on Ultrascale+ (GTYE4) -1 speedgrade parts.
+ * Other: Added support for CPLL calibration block on Ultrascale+ (GTHE4 & GTYE4) parts.
+ * Revision change in one or more subcores
+
+2016.4:
+ * Version 8.7 (Rev. 1)
+ * Bug Fix: Fixed issue with FEC capable slave cores reporting stat_speed output incorrectly for FEC line rates.
+ * Bug Fix: Fixed issue with FEC capable slave cores incorrectly applying capability register changes for FEC line rates.
+ * Bug Fix: Fixed incorrect timing constraints on 7-series cores with maximum line rates of 8.11008Gbps and 0.6144Gbps.
+ * Revision change in one or more subcores
+
+2016.3:
+ * Version 8.7
+ * Port Change: Routed rxrecclkout from the Ultrascale transceiver up to a core output.
+ * Bug Fix: Fixed protocol negotiation issue where slave core would always transmit protocol version 1.
+ * Feature Enhancement: Implemented increased insertion loss and equalization mode settings for Ultrascale devices.
+ * Feature Enhancement: Added 10.1376Gbps and 8B10B line rate support to 24.33024Gbps capable cores.
+ * Feature Enhancement: Added 245.76MHz reference clock option to 24.33024Gbps, 12.16512Gbps and 10.1376Gbps capable cores in GTYE3, GTHE4 and GTYE4 based devices.
+ * Feature Enhancement: Added 24.33024Gbps option to Ultrascale+ GTYE4 based cores.
+ * Feature Enhancement: Added RS-FEC support for 64b66b line rates in 24.33024Gbps capable cores.
+ * Feature Enhancement: Added GTYE4 support for Zynq Ultrascale+ devices.
+ * Feature Enhancement: Added support for enabling and disabling individual line rates.
+ * Other: Removed channel attenuation parameter. The attenuation is now set via the equalization and insertion loss parameters.
+ * Other: Modified management clock rate range in Ultrascale devices to take user clock speeds into account.
+ * Revision change in one or more subcores
+
+2016.2:
+ * Version 8.6 (Rev. 1)
+ * Added support for qkintexu parts.
+ * Fixed issue where the core sticks in the L1 synchronization state after a soft reset.
+ * Revision change in one or more subcores
+
+2016.1:
+ * Version 8.6
+ * Updated to support version 7.0 of the CPRI specification without FEC.
+ * Added 24.33024Gbps line rate support using 64-bit datapath for Virtex Ultrascale devices (GTYE3 transceivers).
+ * Added 10.1376Gbps, 9.8304Gbps and lower support to 12.16512Gbps capable GTHE3 based cores.
+ * Added 12.16512Gbps and 8.11008Gbps support to GTHE2 based cores.
+ * Added 12.16512Gbps support to GTXE2 based cores.
+ * Added fix for ports gt0_rxnotintable & gt0_rxdisperr which had incorrect bus widths with Artix7 devices.
+ * Corrected ordering of sync header in 64b66b cores.
+ * Corrected polarity of BUFG_GT CLRMASK port drivers in clocking logic.
+ * Changes to HDL library management to support Vivado IP simulation library
+ * Added debug signals register.
+ * Increased resolution of CDC FIFO delay reporting.
+ * Reduced frequency of recclk_out in example design to improve timing.
+ * Stretched CPLL powerdown input to over 2 us.
+ * Synchronized CPLL lock signal into speed change state machine.
+ * Revision change in one or more subcores
+
+2015.4.2:
+ * Version 8.5 (Rev. 1)
+ * No changes
+
+2015.4.1:
+ * Version 8.5 (Rev. 1)
+ * No changes
+
+2015.4:
+ * Version 8.5 (Rev. 1)
+ * Updated the block sync state machine to the latest output by the 7-series transceiver wizard. Minor bug fix for 2015.3.
+ * Added new GTYE3 transceiver channel parameter updates. Minor upgrade.
+ * Added missing signals to the transceiver_debug & transceiver_monitor interfaces. Minor interface change.
+ * Tightened clock crossing constraints for Ultrascale 12.16512Gbps capable cores. Bug fix for 2015.3.
+ * Added fix for Artix7 transceiver_monitor interface, receive ports had incorrect bus widths.
+ * Added support for new 7-series speed grades -1IL, -1ML, -2IL. New for 2015.4.
+ * Added fix for stat_speed output glitch for Ultrascale 12.16512Gbps capable cores. Bug fix for 2015.3.
+ * Added fix for user DRP accesses. Ultrascale and 7-series bug fix for 2015.3.
+ * Revision change in one or more subcores
+
+2015.3:
+ * Version 8.5
+ * Updated to use version 1.6 of the Ultrascale GT Wizard.
+ * Added transceiver selection for ultrascale devices to the GUI.
+ * Improved state machine sequencing for the 7-series GTs.
+ * Added support for Ultrascale+.
+ * Added insertion loss setting to switch between LPM and DFE mode in Ultrascale devices.
+ * Restart Ultrascale RX buffer bypass state machine when transceiver PMARESETDONE is low.
+ * Restart Ultrascale TX buffer bypass state machine when TX resetdone is low.
+ * Added reset_aux_clk port for instances that do not use the AXI control interface.
+ * Replace the SSD1 and SSD2 characters in the received Ethernet data with 0x55 in buffer bypass mode.
+ * Changed watchdog reset to only reset the receiver section of the transceiver.
+ * Assert the TXUSERRDY input of the transceiver only when the MMCM has locked in 7-Series.
+ * Improved DRP arbitration by moving arbiter adjacent to the transceiver.
+ * Added Ultrascale and Ultrascale+ support for new line rates 8.11008Gbps and 12.16512Gbps.
+ * CDC FIFO Fill level added to decrease the latency through the master core.
+ * Synchronized the TXPHINITDONE input to the TX alignment block onto the stable clock.
+ * Mu-Law compression example added to the example design.
+ * IP revision number added to HDL module, library, and include file names, to support designs with both locked and upgraded IP instances
+ * Revision change in one or more subcores
+
+2015.2.1:
+ * Version 8.4 (Rev. 1)
+ * No changes
+
+2015.2:
+ * Version 8.4 (Rev. 1)
+ * Output port clk_316_out was added.
+ * Added default values for all clock input ports in IPI.
+ * Added support for the xq7z100 device.
+ * Conflict between barrel shift and speed change DRP accesses resolved.
+ * Corrected routing into DRP arbiter in Ultrascale devices.
+ * GUI changes for -1 speed grade parts.
+
+2015.1:
+ * Version 8.4
+ * Updated to use version 1.5 of the Ultrascale GT Wizard.
+ * Removed redundant core parameters c_use_block_level and c_dual_tile.
+ * Added support for GTY Transceivers.
+ * Added optional support for real time vendor specific data bits in 10.1376Gps capable cores.
+ * Provided access to all CPRI control channels.
+ * Changed from the synchronous gearbox to the asynchronous gearbox to save clocking resources in Ultrascale devices.
+ * Removed the clk_316_in and refclk2 ports from Ultrascale 10.1376Gbps capable cores.
+ * Synchronized the loss of light input into the recovered clock domain.
+ * Added the gt_pcsrsvdin port to the Ultrascale transceiver debug ports.
+ * Fixed 10.1376Gbps auto-negotiation.
+ * Added software reset feature.
+ * Added registers on the transceiver data outputs of 3.072Gbps capable Artix-7 cores to aid timing closure.
+
+2014.4.1:
+ * Version 8.3 (Rev. 1)
+ * No changes
+
+2014.4:
+ * Version 8.3 (Rev. 1)
+ * Added support for new defense grade and aero parts.
+ * cdc_fifo write address while in reset changed to remove memory collision errors.
+ * Encrypted source files are concatenated together to reduce the number of files and to reduce simulator compile time
+
+2014.3:
+ * Version 8.3
+ * Updated to use version 1.4 of the Ultrascale GT Wizard.
+ * Added speed switching for 10.1376Gbps version of the core.
+ * Added transceiver monitor interface.
+ * Added watchdog timer control register.
+ * Added Management Clock Rate parameter for 7 series devices.
+ * Improved TX Ethernet counters to prevent the generation of runt frames.
+ * The directory path to the UltraScale FPGAs Transceivers Wizard output products has been shortened.
+
+2014.2:
+ * Version 8.2 (Rev. 1)
+ * Updated to use version 1.3 of the Ultrascale GT Wizard.
+ * Changes to quad PLL and alignment interfaces to ease core integration in IPI
+
+2014.1:
+ * Version 8.2
+ * Updated to support version 6.0 of the CPRI specification.
+ * Added 10.1376Gbps line rate support.
+ * Added DRP access to the transceiver debug ports.
+ * Added gt_reset_req_out port to cores with shared logic.
+ * Added option to use QPLL1 in Ultrascale devices.
+ * Transceiver output now inhibited when the core is disabled.
+ * Core reset disabled when transceiver debug PRBS inputs are asserted.
+ * Internal device family name change, no functional changes
+ * Netlists created by write_verilog and write_vhdl are IEEE P1735 encrypted, with keys for supported simulators so that netlist simulation can still be done
+ * Enable third party synthesis tools to read encrypted netlists (but not source HDL)
+
+2013.4:
+ * Version 8.1
+ * Added version register.
+ * Kintex UltraScale Pre-Production support.
+ * Added optional transceiver control and status ports.
+ * For IP Integrator, previous bus I/F names have been renamed for consistency. Upgraded IP Integrator designs using this core will require reconnection of the Bus I/F's.
+
+2013.3:
+ * Version 8.0
+ * Option to bypass Ethernet frame buffers added.
+ * In 9.8380Gbps capable cores the unused PLL is now powered down.
+ * Added support for IP Integrator.
+ * Added support for out of context flow.
+ * Reduced warnings in synthesis.
+ * Reduced warnings in simulation.
+ * Added support for Cadence IES and Synopsys VCS simulators.
+ * Updated synchronizers for clock domain crossing to reduce Mean Time Between Failures (MTBF) from metastability.
+ * Added GUI option to include or exclude shareable logic resources in the core.
+ * Added optional transceiver control and status ports.
+
+2013.2:
+ * Version 7.0 (Rev. 1)
+ * Updated to support production silicon for Virtex-7, Artix-7 and Zynq families.
+ * DRP sequence in gt_and_clocks block changed to comply with 2013.2 DRP monitor.
+ * Logic changed to pass correct family into the FIFO generator.
+ * Ethernet clock crossing constraints updated for new signal naming in 2013.2.
+ * DRP address for GTH Barrel shifter corrected.
+ * RXPI_CFG4 and RXPI_CFG5 settings corrected for GTH implementation.
+ * Others clause added to access_ns state machine in slave attachment.
+ * Core XDC file modified to avoid constraints clashing for multiple cores.
+ * Reference clock constraint added to example design XDC file.
+
+2013.1:
+ * Version 7.0
+ * Vivado 2013.1 software support
+ * Artix-7 GTPE2 attributes updated as per answer record 51369
+ * Artix-7 GTPE2 reset sequence change implemented as per answer record 53561
+ * Virtex-7 GTHE2 reset sequence change implemented as per answer record 53779
+
+(c) Copyright 2005 - 2022 Xilinx, Inc. All rights reserved.
+
+This file contains confidential and proprietary information
+of Xilinx, Inc. and is protected under U.S. and
+international copyright and other intellectual property
+laws.
+
+DISCLAIMER
+This disclaimer is not a license and does not grant any
+rights to the materials distributed herewith. Except as
+otherwise provided in a valid license issued to you by
+Xilinx, and to the maximum extent permitted by applicable
+law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND
+WITH ALL FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES
+AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING
+BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-
+INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE; and
+(2) Xilinx shall not be liable (whether in contract or tort,
+including negligence, or under any other theory of
+liability) for any loss or damage of any kind or nature
+related to, arising under or in connection with these
+materials, including for any direct, or any indirect,
+special, incidental, or consequential loss or damage
+(including loss of data, profits, goodwill, or any type of
+loss or damage suffered as a result of any action brought
+by a third party) even if such damage or loss was
+reasonably foreseeable or Xilinx had been advised of the
+possibility of the same.
+
+CRITICAL APPLICATIONS
+Xilinx products are not designed or intended to be fail-
+safe, or for use in any application requiring fail-safe
+performance, such as life-support or safety devices or
+systems, Class III medical devices, nuclear facilities,
+applications related to the deployment of airbags, or any
+other applications that could lead to death, personal
+injury, or severe property or environmental damage
+(individually and collectively, "Critical
+Applications"). Customer assumes the sole risk and
+liability of any use of Xilinx products in Critical
+Applications, subject only to applicable laws and
+regulations governing limitations on product liability.
+
+THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
+PART OF THIS FILE AT ALL TIMES.

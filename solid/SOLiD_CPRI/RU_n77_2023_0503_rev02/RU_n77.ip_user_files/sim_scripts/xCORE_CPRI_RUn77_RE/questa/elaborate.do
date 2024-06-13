@@ -1,0 +1,1 @@
+vopt +acc=npr -l elaborate.log  -L xil_defaultlib -L xilinx_vip -L xpm -L gtwizard_ultrascale_v1_7_15 -L ecc_v2_0_13 -L fc32_rs_fec_v1_0_23 -L axi_lite_ipif_v3_0_4 -L cpri_v8_11_14 -L unisims_ver -L unimacro_ver -L secureip -work xil_defaultlib xil_defaultlib.xCORE_CPRI_RUn77_RE xil_defaultlib.glbl -o xCORE_CPRI_RUn77_RE_opt

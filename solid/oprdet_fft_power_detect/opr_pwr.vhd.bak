@@ -1,0 +1,228 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_signed.all;
+USE IEEE.STD_LOGIC_ARITH.ALL;
+use ieee.numeric_std.all;
+
+entity opr_pwr is
+port(
+    reset_n         : in  std_logic;                      -- resetn
+    clk             : in  std_logic;                      -- sampling clk
+	tsync_in		: in  std_logic; 
+    opr_1_start     : in  std_logic_vector(12 downto 0);  -- 8191
+    opr_1_stop      : in  std_logic_vector(12 downto 0);  -- 8191
+    opr_2_start     : in  std_logic_vector(12 downto 0);  -- 8191
+    opr_2_stop      : in  std_logic_vector(12 downto 0);  -- 8191
+    opr_3_start     : in  std_logic_vector(12 downto 0);  -- 8191
+    opr_3_stop      : in  std_logic_vector(12 downto 0);  -- 8191
+    opr_4_start     : in  std_logic_vector(12 downto 0);  -- 8191
+    opr_4_stop      : in  std_logic_vector(12 downto 0);  -- 8191
+    sin             : in  std_logic_vector(15 downto 0);  -- signal input
+    opr_1_pwr       : out std_logic_vector(31 downto 0);  -- 1 point fft value
+    opr_2_pwr       : out std_logic_vector(31 downto 0);  -- 1 point fft value
+    opr_3_pwr       : out std_logic_vector(31 downto 0);  -- 1 point fft value
+    opr_4_pwr       : out std_logic_vector(31 downto 0);  -- 1 point fft value
+    ave_cnt         : in  std_logic_vector( 7 downto 0)
+    );
+end opr_pwr;
+
+architecture behav of opr_pwr is
+
+COMPONENT fft_8192
+  PORT (
+    aclk                        : IN STD_LOGIC;
+    aresetn                     : IN STD_LOGIC;
+    s_axis_config_tdata         : IN STD_LOGIC_VECTOR( 7 DOWNTO 0);
+    s_axis_config_tvalid        : IN STD_LOGIC;
+    s_axis_config_tready        : OUT STD_LOGIC;
+    s_axis_data_tdata           : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    s_axis_data_tvalid          : IN STD_LOGIC;
+    s_axis_data_tready          : OUT STD_LOGIC;
+    s_axis_data_tlast           : IN STD_LOGIC;
+    m_axis_data_tdata           : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+    m_axis_data_tuser           : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+    m_axis_data_tvalid          : OUT STD_LOGIC;
+    m_axis_data_tready          : IN STD_LOGIC;
+    m_axis_data_tlast           : OUT STD_LOGIC;
+    event_frame_started         : OUT STD_LOGIC;
+    event_tlast_unexpected      : OUT STD_LOGIC;
+    event_tlast_missing         : OUT STD_LOGIC;
+    event_status_channel_halt   : OUT STD_LOGIC;
+    event_data_in_channel_halt  : OUT STD_LOGIC;
+    event_data_out_channel_halt : OUT STD_LOGIC
+  );
+END COMPONENT;
+ subtype stdlogic16 is std_logic_vector( 15 downto  0);
+    type arr_16_4_stdlogic is array(0 to 3) of stdlogic16;
+
+ subtype stdlogic32 is std_logic_vector( 31 downto  0);
+    type arr_32_4_stdlogic is array(0 to 3) of stdlogic32;
+
+signal sink_cnt                 : integer range 0 to 8191;
+signal fft_index                : std_logic_vector(15 downto 0);
+signal fft_in_buf               : std_logic_vector(15 downto 0);
+signal s_axis_config_tdata      : STD_LOGIC_VECTOR(15 DOWNTO 0);
+signal s_axis_config_tvalid     : STD_LOGIC;
+signal s_axis_config_tready     : STD_LOGIC;
+signal s_axis_data_tdata        : STD_LOGIC_VECTOR(31 DOWNTO 0);
+signal s_axis_data_tvalid       : STD_LOGIC;
+signal s_axis_data_tready       : STD_LOGIC;
+signal s_axis_data_tlast        : STD_LOGIC;
+signal m_axis_data_tdata        : STD_LOGIC_VECTOR(63 DOWNTO 0);
+signal m_axis_data_tuser        : STD_LOGIC_VECTOR(15 DOWNTO 0);
+signal m_axis_data_tvalid       : STD_LOGIC;
+signal m_axis_data_tready       : STD_LOGIC;
+signal m_axis_data_tlast        : STD_LOGIC;
+signal event_frame_started      : STD_LOGIC;
+signal fft_value                : arr_16_4_stdlogic;
+signal enb                      : STD_LOGIC_VECTOR( 3 DOWNTO 0);
+signal fft_flag_cnt             : integer range 0 to 8191;
+signal fft_flag_p               : std_logic;
+signal power                    : arr_32_4_stdlogic;
+
+component pow_mea_16_if is
+port(
+    clk             :  in std_logic;
+    reset_n         :  in std_logic;
+    enb             :  in std_logic;
+    din             :  in std_logic_vector(15 downto 0);
+    powcnt          :  in std_logic_vector( 7 downto 0);
+    power           : out std_logic_vector(31 downto 0)
+    );
+end component;
+
+begin
+
+process(reset_n, clk)
+begin
+if (reset_n='0') then
+    fft_flag_cnt <= 0;
+elsif rising_edge(clk) then
+	if (tsync_in = '1') then
+		if( fft_flag_cnt = 8191 ) then
+			fft_flag_cnt   <= fft_flag_cnt;
+		else
+			fft_flag_cnt   <= fft_flag_cnt + 1;
+		end if;
+	end if;
+end if;
+end process;
+
+fft_flag_p <= '1' when fft_flag_cnt = 8191 else '0';
+
+process(reset_n, fft_flag_p, clk)
+begin
+if(reset_n='0' or fft_flag_p='0') then
+    sink_cnt    <= 0;
+    s_axis_data_tlast <= '0';
+elsif rising_edge(clk) then
+	if (tsync_in = '1') then
+		if (sink_cnt = 8191) then
+			sink_cnt <= 8191;
+			s_axis_data_tlast <= '1';
+		else
+			sink_cnt <= sink_cnt + 1;
+		end if;
+	end if;
+end if;
+end process;
+
+process(reset_n, clk)
+begin
+if (reset_n='0') then
+    s_axis_data_tvalid <= '0';
+elsif rising_edge(clk) then
+	if (tsync_in = '1') then
+		if (sink_cnt >= 1 and sink_cnt <= 8191)then
+			s_axis_data_tvalid <= '1';
+		else
+			s_axis_data_tvalid <= '0';
+		end if;
+	end if;
+    fft_in_buf <= sin;
+end if;
+end process;
+
+s_axis_data_tdata <= x"0000" & fft_in_buf;
+
+    U0_fft_8192 : fft_8192
+    port map (
+      aclk                        => clk,                  -- : IN STD_LOGIC;
+      aresetn                     => reset_n,              -- : IN STD_LOGIC;     
+      s_axis_config_tdata         => "00000001",           -- : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+      s_axis_config_tvalid        => '0',                  -- : IN STD_LOGIC;
+      s_axis_config_tready        => s_axis_config_tready, -- : OUT STD_LOGIC;
+      s_axis_data_tdata           => s_axis_data_tdata,    -- : IN STD_LOGIC_VECTOR(31 DOWNTO 0);     
+      s_axis_data_tvalid          => s_axis_data_tvalid,   -- : IN STD_LOGIC; 
+      s_axis_data_tready          => open,                 -- : OUT STD_LOGIC;
+      s_axis_data_tlast           => s_axis_data_tlast,    -- : IN STD_LOGIC; 
+      m_axis_data_tdata           => m_axis_data_tdata,    -- : OUT STD_LOGIC_VECTOR(63 DOWNTO 0); 
+      m_axis_data_tuser           => m_axis_data_tuser,    -- : OUT STD_LOGIC_VECTOR(15 DOWNTO 0); 
+      m_axis_data_tvalid          => m_axis_data_tvalid,   -- : OUT STD_LOGIC; 
+      m_axis_data_tready          => '1',                  -- : IN STD_LOGIC;
+      m_axis_data_tlast           => m_axis_data_tlast,    -- : OUT STD_LOGIC; 
+      event_frame_started         => event_frame_started,  -- : OUT STD_LOGIC;
+      event_tlast_unexpected      => open,                 -- : OUT STD_LOGIC;
+      event_tlast_missing         => open,                 -- : OUT STD_LOGIC;
+      event_status_channel_halt   => open,                 -- : OUT STD_LOGIC;
+      event_data_in_channel_halt  => open,                 -- : OUT STD_LOGIC;
+      event_data_out_channel_halt => open                  -- : OUT STD_LOGIC                  
+      );
+
+fft_index   <= m_axis_data_tuser(15 downto 0);    
+  
+process(reset_n, clk)
+begin
+if (reset_n='0') then
+    enb <= "0000";
+    fft_value(0) <= (others => '0');
+    fft_value(1) <= (others => '0');
+    fft_value(2) <= (others => '0');
+    fft_value(3) <= (others => '0');
+elsif rising_edge(clk) then
+	if (tsync_in = '1') then
+		if(fft_index >= opr_1_start and fft_index <= opr_1_stop) then
+			enb(0)          <= '1';
+			fft_value(0)    <= m_axis_data_tdata( 63) & m_axis_data_tdata( 54 downto  40);
+		elsif(fft_index >= opr_2_start and fft_index <= opr_2_stop) then
+			enb(1)          <= '1';
+			fft_value(1)    <= m_axis_data_tdata(127) & m_axis_data_tdata(118 downto 104);
+		elsif(fft_index >= opr_3_start and fft_index <= opr_3_stop) then
+			enb(2)          <= '1';
+			fft_value(2)    <= m_axis_data_tdata(191) & m_axis_data_tdata(182 downto 168);
+		elsif(fft_index >= opr_4_start and fft_index <= opr_4_stop) then
+			enb(3)          <= '1';
+			fft_value(3)    <= m_axis_data_tdata(255) & m_axis_data_tdata(246 downto 232);  
+		else
+			enb <= "0000";
+			fft_value(0) <=  (others => '0');
+			fft_value(1) <=  (others => '0');
+			fft_value(2) <=  (others => '0');
+			fft_value(3) <=  (others => '0');
+		end if;
+	end if;
+end if;
+end process;
+
+
+opr_pwr_bank : for n in 0 to 3 generate   
+
+FFT_POWER_AVE :  pow_mea_16_if
+port map(
+    clk             => clk                  ,   --:  in std_logic;
+    reset_n         => reset_n              ,   --:  in std_logic;
+    enb             => enb(n)               ,   --:  in std_logic;
+    din             => fft_value(n)         ,   --:  in std_logic_vector(15 downto 0);
+    powcnt          => ave_cnt              ,   --:  in std_logic_vector( 7 downto 0);
+    power           => power(n)             );  --: out std_logic_vector(31 downto 0)
+
+end generate;
+ 
+    opr_1_pwr   <= power(0);
+    opr_2_pwr   <= power(1);
+    opr_3_pwr   <= power(2);
+    opr_4_pwr   <= power(3);
+
+end behav;
+

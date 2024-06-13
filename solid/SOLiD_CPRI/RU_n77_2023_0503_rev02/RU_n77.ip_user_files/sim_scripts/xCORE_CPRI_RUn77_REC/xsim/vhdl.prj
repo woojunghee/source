@@ -1,0 +1,19 @@
+vhdl xil_defaultlib  \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/xCORE_CPRI_RUn77_REC_block.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_reset_synchronizer.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_synchronizer.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/axi/xCORE_CPRI_RUn77_REC_axi_lite_ipif_wrapper.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_watchdog.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/xCORE_CPRI_RUn77_REC_drp_arbiter.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_block_sync_sm.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_gt_and_clocks.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_speed_change.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_support.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_resets.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_clocking.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_tx_alignment.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_gt_gtye4_common_wrapper.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/gtye4_and_clocks/xCORE_CPRI_RUn77_REC_tx_sync.vhd" \
+"../../../../RU_n77.gen/sources_1/ip/xCORE_CPRI_RUn77_REC/synth/xCORE_CPRI_RUn77_REC.vhd" \
+
+nosort
