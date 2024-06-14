@@ -6,6 +6,7 @@ use ieee.numeric_std.all;
 
 --
 --2
+--3
 entity adder_alc_tb is
 end;
 
